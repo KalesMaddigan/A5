@@ -1,0 +1,31 @@
+---
+title: "Regex.Rmd"
+output: html_document
+date: "2025-02-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+MData <- read.csv("./measurements.csv")
+```
+
+```{r}
+library(dplyr)
+MData <- MData %>% 
+  mutate(Sp=gsub("^([A-Za-z])\\w+\\s(\\w+)", "\\1. \\2", Species))
+```
+
+```{r}
+NewData <- MData %>% 
+  select(Sp, everything(), - Species)
+```
+
+```{r}
+write.csv(NewData, "MeasShort.csv", row.names = FALSE)
+```
+
+
+```
